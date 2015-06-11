@@ -20,6 +20,11 @@ main(){
 	printf("A basic game of tic-tac-toe.\n");
 	printf("Board size is %i x %i\n", BOARD_SIZE, BOARD_SIZE);
 	while (check_win() != 1){
+		if (c_player == XX){
+			c_player = OO;
+		}else{
+			c_player = XX;
+		}
 		if (num_turns++ >= max_turns){
 			print_board();
 			printf("Draw game!\n");
@@ -28,24 +33,24 @@ main(){
 		do{
 			print_board();
 		}while (perform_move(c_player));
-		if (c_player == XX){
-			c_player = OO;
-		}else{
-			c_player = XX;
-		}
+
 	}
-	printf("Game over!\n");
+	printf("Game over! The winner was %s\n", c_player);
 	return 0;
 }
 
+// Take in the coordinates of the player's move. Take the input with row/col indexes
+// starting at 1, then shift so they start at 0.
 int
 perform_move(char *player){
 	int row, col;
 	printf("Player %s enter the 'row column' pair to make your move:\n", player);
 	scanf("%i %i",&row, &col);
-	if (row >= BOARD_SIZE || col >= BOARD_SIZE){
+	row -= 1;
+	col -= 1;
+	if (row >= BOARD_SIZE || row < 0 | col >= BOARD_SIZE | col < 0){
 		printf("That space is not on the board!\n");
-		
+		return 1;
 	}
 	if (board[row][col] != EMPTY){
 		printf("That is a non-empty space!\n");
@@ -70,7 +75,7 @@ check_win(){
 				break;
 			}else if (j == BOARD_SIZE - 1){
 				// We've checked all the rows
-				printf("found a win in row %i\n", i);
+				printf("Found a win in row %i\n", i + 1);
 				return 1;
 			}
 			prev = board[i][j];
@@ -87,7 +92,7 @@ check_win(){
 				break;
 			}else if (i == BOARD_SIZE - 1){
 				// We've checked all the columns
-				printf("Found a win in column %i\n", j);
+				printf("Found a win in column %i\n", j + 1);
 				return 1;
 			}
 			prev = board[i][j];
@@ -112,12 +117,13 @@ check_win(){
 	for (i = BOARD_SIZE - 1; i >= 0; i--){
 		if (board[i][BOARD_SIZE - (i + 1)] == EMPTY || board[i][BOARD_SIZE - (i + 1)] != prev){
 			// Cannot be a win on this diagonal, break
+			printf("Checking win on neg diag, i= %i, prev = %s\n", i, prev);
 			break;
 		}else if (i == 0){
 			printf("Found a win on the negative diagonal!\n");
 			return 1;
 		}
-		prev = board[i][i];
+		prev = board[i][BOARD_SIZE - (i + 1)];
 	}
 	return 0;
 }
