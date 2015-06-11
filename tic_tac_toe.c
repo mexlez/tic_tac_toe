@@ -40,8 +40,7 @@ main(){
 
 int
 perform_move(char *player){
-	int row;
-	int col;
+	int row, col;
 	printf("Player %s enter the 'row column' pair to make your move:\n", player);
 	scanf("%i %i",&row, &col);
 	if (row >= BOARD_SIZE || col >= BOARD_SIZE){
@@ -58,8 +57,7 @@ perform_move(char *player){
 
 int
 check_win(){
-	int i = 0;
-	int j = 0;
+	int i, j;
 	char* prev = 0;
 	prev = board[0][0];
 	//Check the board for a win in the rows
@@ -126,8 +124,7 @@ check_win(){
 
 int
 print_board(void){
-	int i = 0;
-	int j = 0;
+	int i, j;
 	for (i = 0; i < BOARD_SIZE; i++){
 		for (j = 0; j < BOARD_SIZE; j++){
 			printf("%s ", board[i][j]);
