@@ -71,6 +71,7 @@ check_win(){
 				prev = board[i][j];
 				break;
 			}else if (j == BOARD_SIZE - 1){
+				// We've checked all the rows
 				printf("found a win in row %i\n", i);
 				return 1;
 			}
@@ -87,7 +88,8 @@ check_win(){
 				prev = board[i][j];
 				break;
 			}else if (i == BOARD_SIZE - 1){
-				printf("Found a win in row %i\n", j);
+				// We've checked all the columns
+				printf("Found a win in column %i\n", j);
 				return 1;
 			}
 			prev = board[i][j];
@@ -120,24 +122,6 @@ check_win(){
 		prev = board[i][i];
 	}
 	return 0;
-/*
-
-	for (i = 0; i < BOARD_SIZE; i++){
-		for (j = 0; j < BOARD_SIZE; j++){
-			if ((board[i][j] != EMPTY) && board[i][j] == board[i][j + 1] == board[i][j + 2]){
-				printf("1A win was found!\n");
-				print_board();
-				return 1;
-			}
-			if ((board[i][j] != EMPTY) && board[i][j] == board[i + 1][j] == board[i + 2][j]){
-				printf("2A win was found!\n");
-				print_board();
-				return 1;
-			}
-		}
-	}
-	return 0;
-	*/
 }
 
 int
@@ -145,7 +129,6 @@ print_board(void){
 	int i = 0;
 	int j = 0;
 	for (i = 0; i < BOARD_SIZE; i++){
-		//printf("%i ", i);
 		for (j = 0; j < BOARD_SIZE; j++){
 			printf("%s ", board[i][j]);
 		}
